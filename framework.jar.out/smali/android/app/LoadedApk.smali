@@ -2028,6 +2028,8 @@
 
     .line 483
     :cond_0
+    invoke-static {p0, p1}, Landroid/app/Injector$LoadedApkHook;->after_getResources(Landroid/app/LoadedApk;Landroid/app/ActivityThread;)V
+
     iget-object v0, p0, Landroid/app/LoadedApk;->mResources:Landroid/content/res/Resources;
 
     return-object v0

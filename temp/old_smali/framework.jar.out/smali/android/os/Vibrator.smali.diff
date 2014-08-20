@@ -1,0 +1,16 @@
+*** ./smali/android/os/Vibrator.smali	2014-08-20 14:01:50.316469607 +0200
+--- /home/Gava97/patchrom/kumquat/temp/new_smali/framework.jar.out/./smali/android/os/Vibrator.smali	2014-08-20 14:00:43.700468735 +0200
+***************
+*** 32,34 ****
+--- 32,42 ----
+  
+  .method public abstract vibrate([JI)V
+  .end method
++ 
++ .method public vibrateEx([B)V
++     .locals 0
++     .parameter "params"
++ 
++     .prologue
++     return-void
++ .end method

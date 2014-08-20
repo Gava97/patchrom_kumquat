@@ -233,20 +233,17 @@
 
     move-result v0
 
-    .line 177
     .local v0, dataEncrypted:Z
     if-eqz v2, :cond_1
 
     if-nez v0, :cond_1
 
-    .line 178
     new-instance v3, Lcom/android/server/usb/UsbDebuggingManager;
 
     invoke-direct {v3, p1}, Lcom/android/server/usb/UsbDebuggingManager;-><init>(Landroid/content/Context;)V
 
-    iput-object v3, p0, Lcom/android/server/usb/UsbDeviceManager;->mDebuggingManager:Lcom/android/server/usb/UsbDebuggingManager;
+    #iput-object v3, p0, Lcom/android/server/usb/UsbDeviceManager;->mDebuggingManager:Lcom/android/server/usb/UsbDebuggingManager;
 
-    .line 180
     :cond_1
     return-void
 .end method
@@ -1447,20 +1444,17 @@
     .locals 2
 
     .prologue
-    .line 883
+    return-void
     iget-object v0, p0, Lcom/android/server/usb/UsbDeviceManager;->mDebuggingManager:Lcom/android/server/usb/UsbDebuggingManager;
 
     if-eqz v0, :cond_0
 
-    .line 884
     iget-object v0, p0, Lcom/android/server/usb/UsbDeviceManager;->mDebuggingManager:Lcom/android/server/usb/UsbDebuggingManager;
 
     invoke-virtual {v0}, Lcom/android/server/usb/UsbDebuggingManager;->clearUsbDebuggingKeys()V
 
-    .line 889
     return-void
 
-    .line 886
     :cond_0
     new-instance v0, Ljava/lang/RuntimeException;
 

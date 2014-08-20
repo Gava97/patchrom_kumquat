@@ -1,0 +1,21 @@
+*** LocalSocketImpl.smali	2014-08-20 14:01:33.484469386 +0200
+--- LocalSocketImpl.smali	2014-08-20 14:00:29.420468548 +0200
+***************
+*** 362,367 ****
+  
+      iput-object v0, p1, Landroid/net/LocalSocketImpl;->fd:Ljava/io/FileDescriptor;
+  
+      return-void
+  .end method
+  
+--- 362,371 ----
+  
+      iput-object v0, p1, Landroid/net/LocalSocketImpl;->fd:Ljava/io/FileDescriptor;
+  
++     const/4 v0, 0x1
++ 
++     iput-boolean v0, p1, Landroid/net/LocalSocketImpl;->mFdCreatedInternally:Z
++ 
+      return-void
+  .end method
+  

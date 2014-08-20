@@ -1,0 +1,23 @@
+*** DisplayPowerController.smali	2014-08-20 14:02:02.256469763 +0200
+--- DisplayPowerController.smali	2014-08-20 14:01:04.868469012 +0200
+***************
+*** 2717,2724 ****
+  
+      invoke-virtual {v0}, Lcom/android/server/power/Notifier;->onScreenOn()V
+  
+-     :cond_0
+      :goto_1
+      return-void
+  
+      :cond_1
+--- 2835,2844 ----
+  
+      invoke-virtual {v0}, Lcom/android/server/power/Notifier;->onScreenOn()V
+  
+      :goto_1
++     invoke-static {p1}, Lcom/android/server/power/PowerManagerService$Injector;->setScreenOn(Z)V
++ 
++     :cond_0
+      return-void
+  
+      :cond_1

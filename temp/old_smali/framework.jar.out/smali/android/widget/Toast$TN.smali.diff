@@ -1,0 +1,23 @@
+*** ./smali/android/widget/Toast$TN.smali	2014-08-20 14:01:17.728469180 +0200
+--- /home/Gava97/patchrom/kumquat/temp/new_smali/framework.jar.out/./smali/android/widget/Toast$TN.smali	2014-08-20 14:00:15.420468365 +0200
+***************
+*** 368,373 ****
+--- 368,385 ----
+      return-void
+  .end method
+  
++ .method public setType(I)V
++     .locals 1
++     .parameter "type"
++ 
++     .prologue
++     iget-object v0, p0, Landroid/widget/Toast$TN;->mParams:Landroid/view/WindowManager$LayoutParams;
++ 
++     iput p1, v0, Landroid/view/WindowManager$LayoutParams;->type:I
++ 
++     return-void
++ .end method
++ 
+  .method public show()V
+      .locals 2
+  

@@ -293,16 +293,15 @@
 
     iput v5, v1, Lcom/android/internal/telephony/cdma/SmsMessage;->mStatusOnIcc:I
 
-    .line 252
     const/4 v5, 0x1
 
-    aget-byte v3, p1, v5
+    aget-byte v5, p1, v5
 
-    .line 256
+    and-int/lit16 v3, v5, 0xff
+
     .local v3, size:I
     new-array v2, v3, [B
 
-    .line 257
     .local v2, pdu:[B
     const/4 v5, 0x2
 
@@ -1497,26 +1496,25 @@
 
     if-lez v21, :cond_9
 
-    .line 577
     invoke-virtual {v8}, Ljava/io/DataInputStream;->readByte()B
 
     move-result v14
 
-    .line 578
     .local v14, parameterId:I
     invoke-virtual {v8}, Ljava/io/DataInputStream;->readUnsignedByte()I
 
-    move-result v15
+    move-result v21
 
-    .line 579
+    move/from16 v0, v21
+
+    and-int/lit16 v15, v0, 0xff
+
     .local v15, parameterLen:I
     new-array v13, v15, [B
 
-    .line 581
     .local v13, parameterData:[B
     packed-switch v14, :pswitch_data_0
 
-    .line 681
     new-instance v21, Ljava/lang/Exception;
 
     new-instance v22, Ljava/lang/StringBuilder;
@@ -2291,7 +2289,10 @@
     .parameter "userData"
 
     .prologue
-    .line 857
+    invoke-static {p0}, Lmiui/telephony/PhoneNumberUtils$PhoneNumber;->replaceCdmaInternationalAccessCode(Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object p0
+
     invoke-static {p0}, Landroid/telephony/PhoneNumberUtils;->cdmaCheckAndProcessPlusCodeForSms(Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v9

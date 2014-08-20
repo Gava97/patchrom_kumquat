@@ -9,7 +9,7 @@
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
-    accessFlags = 0xa
+    accessFlags = 0x8
     name = "CursorTranslator"
 .end annotation
 
@@ -277,34 +277,32 @@
     .parameter "status"
 
     .prologue
-    .line 1353
     packed-switch p1, :pswitch_data_0
 
-    .line 1364
-    const-wide/16 v0, 0x4
+    invoke-static {p1}, Landroid/app/Injector$DownloadManagerHook$CursorTranslator;->getPausedReason(I)I
+
+    move-result v0
+
+    int-to-long v0, v0
 
     :goto_0
     return-wide v0
 
-    .line 1355
     :pswitch_0
     const-wide/16 v0, 0x1
 
     goto :goto_0
 
-    .line 1358
     :pswitch_1
     const-wide/16 v0, 0x2
 
     goto :goto_0
 
-    .line 1361
     :pswitch_2
     const-wide/16 v0, 0x3
 
     goto :goto_0
 
-    .line 1353
     nop
 
     :pswitch_data_0
@@ -320,20 +318,17 @@
     .parameter "status"
 
     .prologue
-    .line 1340
-    invoke-direct {p0, p1}, Landroid/app/DownloadManager$CursorTranslator;->translateStatus(I)I
+    invoke-static {p1}, Landroid/app/DownloadManager$CursorTranslator;->translateStatus(I)I
 
     move-result v0
 
     sparse-switch v0, :sswitch_data_0
 
-    .line 1348
     const-wide/16 v0, 0x0
 
     :goto_0
     return-wide v0
 
-    .line 1342
     :sswitch_0
     invoke-direct {p0, p1}, Landroid/app/DownloadManager$CursorTranslator;->getErrorCode(I)J
 
@@ -357,21 +352,19 @@
     .end sparse-switch
 .end method
 
-.method private translateStatus(I)I
+.method static translateStatus(I)I
     .locals 1
     .parameter "status"
 
     .prologue
-    .line 1407
-    packed-switch p1, :pswitch_data_0
+    packed-switch p0, :pswitch_data_0
 
-    .line 1424
     :pswitch_0
     sget-boolean v0, Landroid/app/DownloadManager$CursorTranslator;->$assertionsDisabled:Z
 
     if-nez v0, :cond_0
 
-    invoke-static {p1}, Landroid/provider/Downloads$Impl;->isStatusError(I)Z
+    invoke-static {p0}, Landroid/provider/Downloads$Impl;->isStatusError(I)Z
 
     move-result v0
 
@@ -436,6 +429,17 @@
 
 
 # virtual methods
+.method callGetLocalUri()Ljava/lang/String;
+    .locals 1
+
+    .prologue
+    invoke-direct {p0}, Landroid/app/DownloadManager$CursorTranslator;->getLocalUri()Ljava/lang/String;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
 .method public getInt(I)I
     .locals 2
     .parameter "columnIndex"
@@ -513,7 +517,7 @@
 
     move-result v0
 
-    invoke-direct {p0, v0}, Landroid/app/DownloadManager$CursorTranslator;->translateStatus(I)I
+    invoke-static {v0}, Landroid/app/DownloadManager$CursorTranslator;->translateStatus(I)I
 
     move-result v0
 
@@ -548,7 +552,7 @@
 
     if-eqz v0, :cond_0
 
-    invoke-direct {p0}, Landroid/app/DownloadManager$CursorTranslator;->getLocalUri()Ljava/lang/String;
+    invoke-static {p0}, Landroid/app/Injector$DownloadManagerHook$CursorTranslator;->getLocalUri(Landroid/app/DownloadManager$CursorTranslator;)Ljava/lang/String;
 
     move-result-object v0
 

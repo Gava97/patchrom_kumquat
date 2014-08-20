@@ -1639,17 +1639,10 @@
 .end method
 
 .method public getDefaultActivityIcon()Landroid/graphics/drawable/Drawable;
-    .locals 2
+    .locals 1
 
     .prologue
-    .line 718
-    invoke-static {}, Landroid/content/res/Resources;->getSystem()Landroid/content/res/Resources;
-
-    move-result-object v0
-
-    const v1, 0x1080093
-
-    invoke-virtual {v0, v1}, Landroid/content/res/Resources;->getDrawable(I)Landroid/graphics/drawable/Drawable;
+    invoke-static {p0}, Landroid/app/Injector$ApplicationPackageManagerHook;->before_getDefaultActivityIcon(Landroid/app/ApplicationPackageManager;)Landroid/graphics/drawable/BitmapDrawable;
 
     move-result-object v0
 
@@ -2971,11 +2964,11 @@
 
     move-result-object v0
 
-    .line 778
     .local v0, r:Landroid/content/res/Resources;
+    invoke-static {v0, p1}, Landroid/app/Injector$ApplicationPackageManagerHook;->setResourcesPackageName(Landroid/content/res/Resources;Landroid/content/pm/ApplicationInfo;)V
+
     if-nez v0, :cond_0
 
-    .line 781
     new-instance v1, Landroid/content/pm/PackageManager$NameNotFoundException;
 
     new-instance v2, Ljava/lang/StringBuilder;
@@ -5118,4 +5111,14 @@
     move-exception v0
 
     goto :goto_0
+.end method
+
+
+.method getContext()Landroid/app/ContextImpl;
+    .locals 1
+
+    .prologue
+    iget-object v0, p0, Landroid/app/ApplicationPackageManager;->mContext:Landroid/app/ContextImpl;
+
+    return-object v0
 .end method

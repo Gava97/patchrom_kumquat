@@ -19865,6 +19865,17 @@
     :cond_2
     iput-boolean v5, p0, Lcom/android/server/wm/WindowManagerService;->mSafeMode:Z
 
+    const/4 v6, 0x0
+
+    if-lez v1, :cond_miui_0
+
+    if-lez v4, :cond_miui_0
+
+    const/4 v6, 0x1
+
+    :cond_miui_0
+    iput-boolean v6, p0, Lcom/android/server/wm/WindowManagerService;->mSafeMode:Z
+
     .line 6966
     :try_start_0
     const-string v5, "persist.sys.safemode"
@@ -30489,6 +30500,17 @@
     goto :goto_1
 .end method
 
+.method public rebootSafeMode()V
+    .locals 1
+
+    .prologue
+    const/4 v0, 0x0
+
+    invoke-virtual {p0, v0}, Lcom/android/server/wm/WindowManagerService;->rebootSafeMode(Z)V
+
+    return-void
+.end method
+
 .method public rebootSafeMode(Z)V
     .locals 1
     .parameter "confirm"
@@ -40634,6 +40656,17 @@
     const/4 v1, 0x0
 
     goto :goto_1
+.end method
+
+.method public shutdown()V
+    .locals 1
+
+    .prologue
+    const/4 v0, 0x0
+
+    invoke-virtual {p0, v0}, Lcom/android/server/wm/WindowManagerService;->shutdown(Z)V
+
+    return-void
 .end method
 
 .method public shutdown(Z)V

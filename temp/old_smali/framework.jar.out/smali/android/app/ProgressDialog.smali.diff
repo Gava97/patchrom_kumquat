@@ -1,0 +1,15 @@
+*** ./smali/android/app/ProgressDialog.smali	2014-08-20 14:01:40.468469478 +0200
+--- /home/Gava97/patchrom/kumquat/temp/new_smali/framework.jar.out/./smali/android/app/ProgressDialog.smali	2014-08-20 14:00:35.580468629 +0200
+***************
+*** 641,646 ****
+--- 641,650 ----
+  
+      invoke-virtual {p0, v2}, Landroid/app/ProgressDialog;->setView(Landroid/view/View;)V
+  
++     iget-object v3, p0, Landroid/app/ProgressDialog;->mMessageView:Landroid/widget/TextView;
++ 
++     invoke-static {p0, v3}, Landroid/app/Injector$ProgressDialogHook;->updateSpinnerStyleProgressDialog(Landroid/app/ProgressDialog;Landroid/widget/TextView;)V
++ 
+      goto :goto_0
+  .end method
+  

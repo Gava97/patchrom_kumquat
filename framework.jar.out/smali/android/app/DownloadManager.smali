@@ -110,8 +110,7 @@
     .locals 3
 
     .prologue
-    .line 314
-    const/16 v0, 0x10
+    const/16 v0, 0xf
 
     new-array v0, v0, [Ljava/lang/String;
 
@@ -195,17 +194,11 @@
 
     const/16 v1, 0xd
 
-    const-string v2, "allow_write"
-
-    aput-object v2, v0, v1
-
-    const/16 v1, 0xe
-
     const-string v2, "\'placeholder\' AS local_uri"
 
     aput-object v2, v0, v1
 
-    const/16 v1, 0xf
+    const/16 v1, 0xe
 
     const-string v2, "\'placeholder\' AS reason"
 
@@ -663,20 +656,6 @@
 
     invoke-virtual {v2, v4, v3}, Landroid/content/ContentValues;->put(Ljava/lang/String;Ljava/lang/Integer;)V
 
-    .line 1232
-    const-string v4, "allow_write"
-
-    if-eqz p9, :cond_3
-
-    const/4 v3, 0x1
-
-    :goto_2
-    invoke-static {v3}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
-
-    move-result-object v3
-
-    invoke-virtual {v2, v4, v3}, Landroid/content/ContentValues;->put(Ljava/lang/String;Ljava/lang/Integer;)V
-
     .line 1233
     iget-object v3, p0, Landroid/app/DownloadManager;->mResolver:Landroid/content/ContentResolver;
 
@@ -686,37 +665,25 @@
 
     move-result-object v0
 
-    .line 1234
     .local v0, downloadUri:Landroid/net/Uri;
     if-nez v0, :cond_4
 
-    .line 1235
     const-wide/16 v3, -0x1
 
-    .line 1237
     :goto_3
     return-wide v3
 
-    .line 1227
     .end local v0           #downloadUri:Landroid/net/Uri;
     :cond_1
     const/4 v3, 0x2
 
     goto :goto_0
 
-    .line 1230
     :cond_2
     const/4 v3, 0x2
 
     goto :goto_1
 
-    .line 1232
-    :cond_3
-    const/4 v3, 0x0
-
-    goto :goto_2
-
-    .line 1237
     .restart local v0       #downloadUri:Landroid/net/Uri;
     :cond_4
     invoke-virtual {v0}, Landroid/net/Uri;->getLastPathSegment()Ljava/lang/String;
@@ -765,6 +732,15 @@
     .line 948
     .local v1, id:J
     return-wide v1
+.end method
+
+.method getBaseUri()Landroid/net/Uri;
+    .locals 1
+
+    .prologue
+    iget-object v0, p0, Landroid/app/DownloadManager;->mBaseUri:Landroid/net/Uri;
+
+    return-object v0
 .end method
 
 .method public getDownloadUri(J)Landroid/net/Uri;

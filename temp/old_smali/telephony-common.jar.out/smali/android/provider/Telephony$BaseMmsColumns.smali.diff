@@ -1,0 +1,13 @@
+*** ./smali/android/provider/Telephony$BaseMmsColumns.smali	2014-08-20 14:02:08.220469841 +0200
+--- /home/Gava97/patchrom/kumquat/temp/new_smali/telephony-common.jar.out/./smali/android/provider/Telephony$BaseMmsColumns.smali	2014-08-20 14:01:14.336469136 +0200
+***************
+*** 235,240 ****
+--- 235,242 ----
+      .end annotation
+  .end field
+  
++ .field public static final SIM_ID:Ljava/lang/String; = "sim_id"
++ 
+  .field public static final START:Ljava/lang/String; = "start"
+      .annotation runtime Ljava/lang/Deprecated;
+      .end annotation

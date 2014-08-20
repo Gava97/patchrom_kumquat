@@ -15,6 +15,14 @@
 # static fields
 .field private static LOG_TAG:Ljava/lang/String;
 
+.field public static PRESENTATION_ALLOWED:I
+
+.field public static PRESENTATION_PAYPHONE:I
+
+.field public static PRESENTATION_RESTRICTED:I
+
+.field public static PRESENTATION_UNKNOWN:I
+
 
 # instance fields
 .field protected mCnapName:Ljava/lang/String;
@@ -29,7 +37,22 @@
     .locals 1
 
     .prologue
-    .line 31
+    const/4 v0, 0x1
+
+    sput v0, Lcom/android/internal/telephony/Connection;->PRESENTATION_ALLOWED:I
+
+    const/4 v0, 0x2
+
+    sput v0, Lcom/android/internal/telephony/Connection;->PRESENTATION_RESTRICTED:I
+
+    const/4 v0, 0x3
+
+    sput v0, Lcom/android/internal/telephony/Connection;->PRESENTATION_UNKNOWN:I
+
+    const/4 v0, 0x4
+
+    sput v0, Lcom/android/internal/telephony/Connection;->PRESENTATION_PAYPHONE:I
+
     const-string v0, "Connection"
 
     sput-object v0, Lcom/android/internal/telephony/Connection;->LOG_TAG:Ljava/lang/String;

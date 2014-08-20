@@ -1816,6 +1816,15 @@
     goto :goto_0
 .end method
 
+.method getContext()Landroid/content/Context;
+    .locals 1
+
+    .prologue
+    iget-object v0, p0, Landroid/telephony/TelephonyManager;->mContext:Landroid/content/Context;
+
+    return-object v0
+.end method
+
 .method public getCurrentPhoneType()I
     .locals 3
 
@@ -2651,10 +2660,7 @@
     .locals 1
 
     .prologue
-    .line 894
-    const-string v0, "gsm.sim.operator.numeric"
-
-    invoke-static {v0}, Landroid/os/SystemProperties;->get(Ljava/lang/String;)Ljava/lang/String;
+    invoke-static {p0}, Landroid/telephony/Injector$TelephonyManagerHook;->getSimOperator(Landroid/telephony/TelephonyManager;)Ljava/lang/String;
 
     move-result-object v0
 

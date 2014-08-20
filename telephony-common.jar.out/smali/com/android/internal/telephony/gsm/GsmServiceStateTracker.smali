@@ -2634,10 +2634,12 @@
 
     invoke-virtual {v0, v1, v2, v3}, Lcom/android/internal/telephony/gsm/GsmServiceStateTracker;->updateCarrierMccMncConfiguration(Ljava/lang/String;Ljava/lang/String;Landroid/content/Context;)V
 
-    .line 953
-    if-nez v27, :cond_1e
+    invoke-static/range {v27 .. v27}, Landroid/text/TextUtils;->isEmpty(Ljava/lang/CharSequence;)Z
 
-    .line 954
+    move-result v37
+
+    if-eqz v37, :cond_1e
+
     const-string v37, "operatorNumeric is null"
 
     move-object/from16 v0, p0
@@ -3263,6 +3265,16 @@
     move-object/from16 v1, v37
 
     invoke-direct {v0, v1}, Lcom/android/internal/telephony/gsm/GsmServiceStateTracker;->setAndBroadcastNetworkSetTimeZone(Ljava/lang/String;)V
+
+    invoke-virtual/range {v35 .. v35}, Ljava/util/TimeZone;->getID()Ljava/lang/String;
+
+    move-result-object v37
+
+    move-object/from16 v0, p0
+
+    move-object/from16 v1, v37
+
+    invoke-direct {v0, v1}, Lcom/android/internal/telephony/gsm/GsmServiceStateTracker;->saveNitzTimeZone(Ljava/lang/String;)V
 
     .line 1002
     .end local v30           #testOneUniqueOffsetPath:Z
@@ -9192,6 +9204,10 @@
     .line 552
     .local v6, spn:Ljava/lang/String;
     :goto_3
+    invoke-static {p0, v6}, Lcom/android/internal/telephony/Injector$ServiceStateTrackerHook;->getSpn(Lcom/android/internal/telephony/ServiceStateTracker;Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object v6
+
     invoke-static {v6}, Landroid/text/TextUtils;->isEmpty(Ljava/lang/CharSequence;)Z
 
     move-result v9
@@ -9207,6 +9223,23 @@
     .line 557
     .local v5, showSpn:Z
     :goto_4
+    if-eqz v5, :cond_miui
+
+    iget-boolean v9, p0, Lcom/android/internal/telephony/gsm/GsmServiceStateTracker;->mEmergencyOnly:Z
+
+    if-nez v9, :cond_miui
+
+    iget-object v9, p0, Lcom/android/internal/telephony/gsm/GsmServiceStateTracker;->mSS:Landroid/telephony/ServiceState;
+
+    invoke-virtual {v9}, Landroid/telephony/ServiceState;->getState()I
+
+    move-result v9
+
+    if-nez v9, :cond_miui
+
+    move v5, v8
+
+    :goto_miui
     iget-boolean v9, p0, Lcom/android/internal/telephony/gsm/GsmServiceStateTracker;->mCurShowPlmn:Z
 
     if-ne v4, v9, :cond_1
@@ -9384,14 +9417,16 @@
 
     if-nez v9, :cond_7
 
-    .line 538
     iget-object v9, p0, Lcom/android/internal/telephony/gsm/GsmServiceStateTracker;->mSS:Landroid/telephony/ServiceState;
 
     invoke-virtual {v9}, Landroid/telephony/ServiceState;->getOperatorAlphaLong()Ljava/lang/String;
 
     move-result-object v2
 
-    .line 539
+    invoke-static {p0, v2}, Lcom/android/internal/telephony/Injector$ServiceStateTrackerHook;->getSpn(Lcom/android/internal/telephony/ServiceStateTracker;Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object v2
+
     invoke-static {v2}, Landroid/text/TextUtils;->isEmpty(Ljava/lang/CharSequence;)Z
 
     move-result v9
@@ -9458,4 +9493,10 @@
 
     .line 552
     goto/16 :goto_4
+
+    .restart local v5       #showSpn:Z
+    :cond_miui
+    move v5, v7
+
+    goto/16 :goto_miui
 .end method

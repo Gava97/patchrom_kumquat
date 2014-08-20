@@ -1,0 +1,19 @@
+*** PhoneWindowManager.smali	2014-08-20 14:02:09.800469861 +0200
+--- PhoneWindowManager.smali	2014-08-20 14:01:15.552469152 +0200
+***************
+*** 4408,4413 ****
+  
+      .end local v0           #applyWindow:Z
+      :cond_a
+      return-void
+  
+      :cond_b
+--- 4420,4427 ----
+  
+      .end local v0           #applyWindow:Z
+      :cond_a
++     invoke-static {p0, p1, p2}, Lcom/android/internal/policy/impl/PhoneWindowManager$Injector;->setAboveStatusBarFullScreenWindow(Lcom/android/internal/policy/impl/PhoneWindowManager;Landroid/view/WindowManagerPolicy$WindowState;Landroid/view/WindowManager$LayoutParams;)V
++ 
+      return-void
+  
+      :cond_b

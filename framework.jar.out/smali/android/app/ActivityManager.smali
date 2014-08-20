@@ -101,6 +101,8 @@
 
 .field public static final START_FORWARD_AND_REQUEST_CONFLICT:I = -0x3
 
+.field public static final START_INCOMPATIBLE:I = 0x5
+
 .field public static final START_INTENT_NOT_RESOLVED:I = -0x1
 
 .field public static final START_NOT_ACTIVITY:I = -0x5
@@ -708,6 +710,18 @@
     goto :goto_0
 .end method
 
+.method public static isHighEndGfx(Landroid/view/Display;)Z
+    .locals 1
+    .parameter "display"
+
+    .prologue
+    invoke-static {}, Landroid/app/ActivityManager;->isHighEndGfx()Z
+
+    move-result v0
+
+    return v0
+.end method
+
 .method public static isLowRamDeviceStatic()Z
     .locals 3
 
@@ -941,7 +955,15 @@
     .parameter "packageName"
 
     .prologue
-    .line 1968
+    invoke-static {p0, p1}, Landroid/app/Injector$ActivityManagerHook;->before_forceStopPackage(Landroid/app/ActivityManager;Ljava/lang/String;)Z
+
+    move-result v0
+
+    if-eqz v0, :cond_0
+
+    goto :goto_0
+
+    :cond_0
     :try_start_0
     invoke-static {}, Landroid/app/ActivityManagerNative;->getDefault()Landroid/app/IActivityManager;
 
@@ -955,11 +977,9 @@
     :try_end_0
     .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
 
-    .line 1972
     :goto_0
     return-void
 
-    .line 1970
     :catch_0
     move-exception v0
 
@@ -980,9 +1000,8 @@
     .end annotation
 
     .prologue
-    .line 2085
     :try_start_0
-    const-string/jumbo v8, "usagestats"
+    const-string v8, "usagestats"
 
     invoke-static {v8}, Landroid/os/ServiceManager;->getService(Ljava/lang/String;)Landroid/os/IBinder;
 
@@ -992,33 +1011,27 @@
 
     move-result-object v7
 
-    .line 2087
     .local v7, usageStatsService:Lcom/android/internal/app/IUsageStats;
     if-nez v7, :cond_1
 
-    .line 2088
     new-instance v4, Ljava/util/HashMap;
 
     invoke-direct {v4}, Ljava/util/HashMap;-><init>()V
 
-    .line 2104
     .end local v7           #usageStatsService:Lcom/android/internal/app/IUsageStats;
     :cond_0
     :goto_0
     return-object v4
 
-    .line 2091
     .restart local v7       #usageStatsService:Lcom/android/internal/app/IUsageStats;
     :cond_1
     invoke-interface {v7}, Lcom/android/internal/app/IUsageStats;->getAllPkgUsageStats()[Lcom/android/internal/os/PkgUsageStats;
 
     move-result-object v0
 
-    .line 2092
     .local v0, allPkgUsageStats:[Lcom/android/internal/os/PkgUsageStats;
     if-nez v0, :cond_2
 
-    .line 2093
     new-instance v4, Ljava/util/HashMap;
 
     invoke-direct {v4}, Ljava/util/HashMap;-><init>()V
@@ -1027,13 +1040,11 @@
 
     goto :goto_0
 
-    .line 2102
     .end local v0           #allPkgUsageStats:[Lcom/android/internal/os/PkgUsageStats;
     .end local v7           #usageStatsService:Lcom/android/internal/app/IUsageStats;
     :catch_0
     move-exception v2
 
-    .line 2103
     .local v2, e:Landroid/os/RemoteException;
     sget-object v8, Landroid/app/ActivityManager;->TAG:Ljava/lang/String;
 
@@ -1041,14 +1052,12 @@
 
     invoke-static {v8, v9, v2}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
 
-    .line 2104
     new-instance v4, Ljava/util/HashMap;
 
     invoke-direct {v4}, Ljava/util/HashMap;-><init>()V
 
     goto :goto_0
 
-    .line 2096
     .end local v2           #e:Landroid/os/RemoteException;
     .restart local v0       #allPkgUsageStats:[Lcom/android/internal/os/PkgUsageStats;
     .restart local v7       #usageStatsService:Lcom/android/internal/app/IUsageStats;
@@ -1058,7 +1067,6 @@
 
     invoke-direct {v4}, Ljava/util/HashMap;-><init>()V
 
-    .line 2097
     .local v4, launchCounts:Ljava/util/Map;,"Ljava/util/Map<Ljava/lang/String;Ljava/lang/Integer;>;"
     move-object v1, v0
 
@@ -1074,7 +1082,6 @@
 
     aget-object v6, v1, v3
 
-    .line 2098
     .local v6, pkgUsageStats:Lcom/android/internal/os/PkgUsageStats;
     iget-object v8, v6, Lcom/android/internal/os/PkgUsageStats;->packageName:Ljava/lang/String;
 
@@ -1088,7 +1095,6 @@
     :try_end_1
     .catch Landroid/os/RemoteException; {:try_start_1 .. :try_end_1} :catch_0
 
-    .line 2097
     add-int/lit8 v3, v3, 0x1
 
     goto :goto_1
@@ -1098,9 +1104,8 @@
     .locals 4
 
     .prologue
-    .line 2214
     :try_start_0
-    const-string/jumbo v2, "usagestats"
+    const-string v2, "usagestats"
 
     invoke-static {v2}, Landroid/os/ServiceManager;->getService(Ljava/lang/String;)Landroid/os/IBinder;
 
@@ -1110,27 +1115,22 @@
 
     move-result-object v1
 
-    .line 2216
     .local v1, usageStatsService:Lcom/android/internal/app/IUsageStats;
     if-eqz v1, :cond_0
 
-    .line 2217
     invoke-interface {v1}, Lcom/android/internal/app/IUsageStats;->getAllPkgUsageStats()[Lcom/android/internal/os/PkgUsageStats;
     :try_end_0
     .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
 
     move-result-object v2
 
-    .line 2222
     .end local v1           #usageStatsService:Lcom/android/internal/app/IUsageStats;
     :goto_0
     return-object v2
 
-    .line 2219
     :catch_0
     move-exception v0
 
-    .line 2220
     .local v0, e:Landroid/os/RemoteException;
     sget-object v2, Landroid/app/ActivityManager;->TAG:Ljava/lang/String;
 
@@ -1138,7 +1138,6 @@
 
     invoke-static {v2, v3, v0}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
 
-    .line 2222
     .end local v0           #e:Landroid/os/RemoteException;
     :cond_0
     const/4 v2, 0x0
@@ -1148,11 +1147,19 @@
     goto :goto_0
 .end method
 
+.method getContext()Landroid/content/Context;
+    .locals 1
+
+    .prologue
+    iget-object v0, p0, Landroid/app/ActivityManager;->mContext:Landroid/content/Context;
+
+    return-object v0
+.end method
+
 .method public getDeviceConfigurationInfo()Landroid/content/pm/ConfigurationInfo;
     .locals 1
 
     .prologue
-    .line 1979
     :try_start_0
     invoke-static {}, Landroid/app/ActivityManagerNative;->getDefault()Landroid/app/IActivityManager;
 
@@ -1164,15 +1171,12 @@
 
     move-result-object v0
 
-    .line 1982
     :goto_0
     return-object v0
 
-    .line 1980
     :catch_0
     move-exception v0
 
-    .line 1982
     const/4 v0, 0x0
 
     goto :goto_0
@@ -1182,7 +1186,6 @@
     .locals 2
 
     .prologue
-    .line 334
     :try_start_0
     invoke-static {}, Landroid/app/ActivityManagerNative;->getDefault()Landroid/app/IActivityManager;
 
@@ -1194,15 +1197,12 @@
 
     move-result v1
 
-    .line 337
     :goto_0
     return v1
 
-    .line 335
     :catch_0
     move-exception v0
 
-    .line 337
     .local v0, e:Landroid/os/RemoteException;
     const/4 v1, 0x0
 
@@ -1213,7 +1213,6 @@
     .locals 1
 
     .prologue
-    .line 425
     invoke-static {}, Landroid/app/ActivityManager;->staticGetLargeMemoryClass()I
 
     move-result v0
@@ -1227,14 +1226,12 @@
     .prologue
     const/16 v3, 0x140
 
-    .line 1992
     iget-object v4, p0, Landroid/app/ActivityManager;->mContext:Landroid/content/Context;
 
     invoke-virtual {v4}, Landroid/content/Context;->getResources()Landroid/content/res/Resources;
 
     move-result-object v1
 
-    .line 1993
     .local v1, res:Landroid/content/res/Resources;
     invoke-virtual {v1}, Landroid/content/res/Resources;->getDisplayMetrics()Landroid/util/DisplayMetrics;
 
@@ -1242,7 +1239,6 @@
 
     iget v0, v4, Landroid/util/DisplayMetrics;->densityDpi:I
 
-    .line 1994
     .local v0, density:I
     invoke-virtual {v1}, Landroid/content/res/Resources;->getConfiguration()Landroid/content/res/Configuration;
 
@@ -1250,23 +1246,19 @@
 
     iget v2, v4, Landroid/content/res/Configuration;->smallestScreenWidthDp:I
 
-    .line 1996
     .local v2, sw:I
     const/16 v4, 0x258
 
     if-ge v2, v4, :cond_0
 
-    .line 2017
     .end local v0           #density:I
     :goto_0
     return v0
 
-    .line 2001
     .restart local v0       #density:I
     :cond_0
     sparse-switch v0, :sswitch_data_0
 
-    .line 2017
     int-to-float v3, v0
 
     const/high16 v4, 0x3fc0
@@ -1281,13 +1273,11 @@
 
     goto :goto_0
 
-    .line 2003
     :sswitch_0
     const/16 v0, 0xa0
 
     goto :goto_0
 
-    .line 2005
     :sswitch_1
     const/16 v0, 0xf0
 
@@ -1296,28 +1286,23 @@
     :sswitch_2
     move v0, v3
 
-    .line 2007
     goto :goto_0
 
     :sswitch_3
     move v0, v3
 
-    .line 2009
     goto :goto_0
 
-    .line 2011
     :sswitch_4
     const/16 v0, 0x1e0
 
     goto :goto_0
 
-    .line 2013
     :sswitch_5
     const/16 v0, 0x280
 
     goto :goto_0
 
-    .line 2001
     nop
 
     :sswitch_data_0
@@ -1335,14 +1320,12 @@
     .locals 6
 
     .prologue
-    .line 2028
     iget-object v4, p0, Landroid/app/ActivityManager;->mContext:Landroid/content/Context;
 
     invoke-virtual {v4}, Landroid/content/Context;->getResources()Landroid/content/res/Resources;
 
     move-result-object v1
 
-    .line 2029
     .local v1, res:Landroid/content/res/Resources;
     const/high16 v4, 0x105
 
@@ -1350,7 +1333,6 @@
 
     move-result v2
 
-    .line 2030
     .local v2, size:I
     invoke-virtual {v1}, Landroid/content/res/Resources;->getConfiguration()Landroid/content/res/Configuration;
 
@@ -1358,18 +1340,15 @@
 
     iget v3, v4, Landroid/content/res/Configuration;->smallestScreenWidthDp:I
 
-    .line 2032
     .local v3, sw:I
     const/16 v4, 0x258
 
     if-ge v3, v4, :cond_0
 
-    .line 2055
     .end local v2           #size:I
     :goto_0
     return v2
 
-    .line 2037
     .restart local v2       #size:I
     :cond_0
     invoke-virtual {v1}, Landroid/content/res/Resources;->getDisplayMetrics()Landroid/util/DisplayMetrics;
@@ -1378,11 +1357,9 @@
 
     iget v0, v4, Landroid/util/DisplayMetrics;->densityDpi:I
 
-    .line 2039
     .local v0, density:I
     sparse-switch v0, :sswitch_data_0
 
-    .line 2055
     int-to-float v4, v2
 
     const/high16 v5, 0x3fc0
@@ -1397,7 +1374,6 @@
 
     goto :goto_0
 
-    .line 2041
     :sswitch_0
     mul-int/lit16 v4, v2, 0xa0
 
@@ -1405,7 +1381,6 @@
 
     goto :goto_0
 
-    .line 2043
     :sswitch_1
     mul-int/lit16 v4, v2, 0xf0
 
@@ -1413,7 +1388,6 @@
 
     goto :goto_0
 
-    .line 2045
     :sswitch_2
     mul-int/lit16 v4, v2, 0x140
 
@@ -1421,7 +1395,6 @@
 
     goto :goto_0
 
-    .line 2047
     :sswitch_3
     mul-int/lit16 v4, v2, 0x140
 
@@ -1429,7 +1402,6 @@
 
     goto :goto_0
 
-    .line 2049
     :sswitch_4
     mul-int/lit16 v4, v2, 0x1e0
 
@@ -1437,7 +1409,6 @@
 
     goto :goto_0
 
-    .line 2051
     :sswitch_5
     mul-int/lit16 v4, v2, 0x140
 
@@ -1447,7 +1418,6 @@
 
     goto :goto_0
 
-    .line 2039
     nop
 
     :sswitch_data_0
@@ -1465,7 +1435,6 @@
     .locals 1
 
     .prologue
-    .line 397
     invoke-static {}, Landroid/app/ActivityManager;->staticGetMemoryClass()I
 
     move-result v0
@@ -1478,7 +1447,6 @@
     .parameter "outInfo"
 
     .prologue
-    .line 1286
     :try_start_0
     invoke-static {}, Landroid/app/ActivityManagerNative;->getDefault()Landroid/app/IActivityManager;
 
@@ -1488,11 +1456,9 @@
     :try_end_0
     .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
 
-    .line 1289
     :goto_0
     return-void
 
-    .line 1287
     :catch_0
     move-exception v0
 
@@ -1504,7 +1470,7 @@
     .parameter "packageName"
 
     .prologue
-    .line 372
+    .line 1968
     :try_start_0
     invoke-static {}, Landroid/app/ActivityManagerNative;->getDefault()Landroid/app/IActivityManager;
 
@@ -1516,15 +1482,12 @@
 
     move-result v1
 
-    .line 375
     :goto_0
     return v1
 
-    .line 373
     :catch_0
     move-exception v0
 
-    .line 375
     .local v0, e:Landroid/os/RemoteException;
     const/4 v1, 0x0
 
@@ -1536,7 +1499,6 @@
     .parameter "packageName"
 
     .prologue
-    .line 353
     :try_start_0
     invoke-static {}, Landroid/app/ActivityManagerNative;->getDefault()Landroid/app/IActivityManager;
 
@@ -1548,15 +1510,12 @@
 
     move-result v1
 
-    .line 356
     :goto_0
     return v1
 
-    .line 354
     :catch_0
     move-exception v0
 
-    .line 356
     .local v0, e:Landroid/os/RemoteException;
     const/4 v1, 0x0
 
@@ -1568,7 +1527,6 @@
     .parameter "pids"
 
     .prologue
-    .line 1909
     :try_start_0
     invoke-static {}, Landroid/app/ActivityManagerNative;->getDefault()Landroid/app/IActivityManager;
 
@@ -1580,15 +1538,12 @@
 
     move-result-object v1
 
-    .line 1911
     :goto_0
     return-object v1
 
-    .line 1910
     :catch_0
     move-exception v0
 
-    .line 1911
     .local v0, e:Landroid/os/RemoteException;
     const/4 v1, 0x0
 
@@ -1608,7 +1563,6 @@
     .end annotation
 
     .prologue
-    .line 1593
     :try_start_0
     invoke-static {}, Landroid/app/ActivityManagerNative;->getDefault()Landroid/app/IActivityManager;
 
@@ -1620,15 +1574,12 @@
 
     move-result-object v1
 
-    .line 1595
     :goto_0
     return-object v1
 
-    .line 1594
     :catch_0
     move-exception v0
 
-    .line 1595
     .local v0, e:Landroid/os/RemoteException;
     const/4 v1, 0x0
 
@@ -1656,7 +1607,6 @@
     .end annotation
 
     .prologue
-    .line 598
     :try_start_0
     invoke-static {}, Landroid/app/ActivityManagerNative;->getDefault()Landroid/app/IActivityManager;
 
@@ -1672,15 +1622,12 @@
 
     move-result-object v1
 
-    .line 602
     :goto_0
     return-object v1
 
-    .line 600
     :catch_0
     move-exception v0
 
-    .line 602
     .local v0, e:Landroid/os/RemoteException;
     const/4 v1, 0x0
 
@@ -1709,7 +1656,6 @@
     .end annotation
 
     .prologue
-    .line 627
     :try_start_0
     invoke-static {}, Landroid/app/ActivityManagerNative;->getDefault()Landroid/app/IActivityManager;
 
@@ -1721,15 +1667,12 @@
 
     move-result-object v1
 
-    .line 631
     :goto_0
     return-object v1
 
-    .line 629
     :catch_0
     move-exception v0
 
-    .line 631
     .local v0, e:Landroid/os/RemoteException;
     const/4 v1, 0x0
 
@@ -1749,7 +1692,6 @@
     .end annotation
 
     .prologue
-    .line 1872
     :try_start_0
     invoke-static {}, Landroid/app/ActivityManagerNative;->getDefault()Landroid/app/IActivityManager;
 
@@ -1761,15 +1703,12 @@
 
     move-result-object v1
 
-    .line 1874
     :goto_0
     return-object v1
 
-    .line 1873
     :catch_0
     move-exception v0
 
-    .line 1874
     .local v0, e:Landroid/os/RemoteException;
     const/4 v1, 0x0
 
@@ -1789,7 +1728,6 @@
     .end annotation
 
     .prologue
-    .line 1854
     :try_start_0
     invoke-static {}, Landroid/app/ActivityManagerNative;->getDefault()Landroid/app/IActivityManager;
 
@@ -1801,15 +1739,12 @@
 
     move-result-object v1
 
-    .line 1856
     :goto_0
     return-object v1
 
-    .line 1855
     :catch_0
     move-exception v0
 
-    .line 1856
     .local v0, e:Landroid/os/RemoteException;
     const/4 v1, 0x0
 
@@ -1826,7 +1761,6 @@
     .end annotation
 
     .prologue
-    .line 1180
     :try_start_0
     invoke-static {}, Landroid/app/ActivityManagerNative;->getDefault()Landroid/app/IActivityManager;
 
@@ -1838,15 +1772,12 @@
 
     move-result-object v1
 
-    .line 1184
     :goto_0
     return-object v1
 
-    .line 1182
     :catch_0
     move-exception v0
 
-    .line 1184
     .local v0, e:Landroid/os/RemoteException;
     const/4 v1, 0x0
 
@@ -1873,7 +1804,6 @@
     .end annotation
 
     .prologue
-    .line 1164
     :try_start_0
     invoke-static {}, Landroid/app/ActivityManagerNative;->getDefault()Landroid/app/IActivityManager;
 
@@ -1887,15 +1817,12 @@
 
     move-result-object v1
 
-    .line 1168
     :goto_0
     return-object v1
 
-    .line 1166
     :catch_0
     move-exception v0
 
-    .line 1168
     .local v0, e:Landroid/os/RemoteException;
     const/4 v1, 0x0
 
@@ -1922,7 +1849,6 @@
     .end annotation
 
     .prologue
-    .line 805
     const/4 v0, 0x0
 
     const/4 v1, 0x0
@@ -1958,7 +1884,6 @@
     .end annotation
 
     .prologue
-    .line 769
     :try_start_0
     invoke-static {}, Landroid/app/ActivityManagerNative;->getDefault()Landroid/app/IActivityManager;
 
@@ -1970,15 +1895,12 @@
 
     move-result-object v1
 
-    .line 772
     :goto_0
     return-object v1
 
-    .line 770
     :catch_0
     move-exception v0
 
-    .line 772
     .local v0, e:Landroid/os/RemoteException;
     const/4 v1, 0x0
 
@@ -1995,7 +1917,6 @@
     .end annotation
 
     .prologue
-    .line 919
     :try_start_0
     invoke-static {}, Landroid/app/ActivityManagerNative;->getDefault()Landroid/app/IActivityManager;
 
@@ -2007,15 +1928,12 @@
 
     move-result-object v1
 
-    .line 922
     :goto_0
     return-object v1
 
-    .line 920
     :catch_0
     move-exception v0
 
-    .line 922
     .local v0, e:Landroid/os/RemoteException;
     const/4 v1, 0x0
 
@@ -2032,7 +1950,6 @@
     .end annotation
 
     .prologue
-    .line 929
     :try_start_0
     invoke-static {}, Landroid/app/ActivityManagerNative;->getDefault()Landroid/app/IActivityManager;
 
@@ -2044,15 +1961,12 @@
 
     move-result-object v1
 
-    .line 932
     :goto_0
     return-object v1
 
-    .line 930
     :catch_0
     move-exception v0
 
-    .line 932
     .local v0, e:Landroid/os/RemoteException;
     const/4 v1, 0x0
 
@@ -2063,7 +1977,6 @@
     .locals 1
 
     .prologue
-    .line 444
     invoke-static {}, Landroid/app/ActivityManager;->isLowRamDeviceStatic()Z
 
     move-result v0
@@ -2078,7 +1991,6 @@
     .prologue
     const/4 v1, 0x0
 
-    .line 2248
     :try_start_0
     invoke-static {}, Landroid/app/ActivityManagerNative;->getDefault()Landroid/app/IActivityManager;
 
@@ -2092,15 +2004,12 @@
 
     move-result v1
 
-    .line 2250
     :goto_0
     return v1
 
-    .line 2249
     :catch_0
     move-exception v0
 
-    .line 2250
     .local v0, e:Landroid/os/RemoteException;
     goto :goto_0
 .end method
@@ -2110,7 +2019,6 @@
     .parameter "packageName"
 
     .prologue
-    .line 1942
     :try_start_0
     invoke-static {}, Landroid/app/ActivityManagerNative;->getDefault()Landroid/app/IActivityManager;
 
@@ -2124,11 +2032,11 @@
     :try_end_0
     .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
 
-    .line 1946
+    .line 1972
     :goto_0
     return-void
 
-    .line 1944
+    .line 1970
     :catch_0
     move-exception v0
 
@@ -2141,12 +2049,10 @@
     .parameter "flags"
 
     .prologue
-    .line 960
     const/4 v0, 0x0
 
     invoke-virtual {p0, p1, p2, v0}, Landroid/app/ActivityManager;->moveTaskToFront(IILandroid/os/Bundle;)V
 
-    .line 961
     return-void
 .end method
 
@@ -2157,7 +2063,6 @@
     .parameter "options"
 
     .prologue
-    .line 979
     :try_start_0
     invoke-static {}, Landroid/app/ActivityManagerNative;->getDefault()Landroid/app/IActivityManager;
 
@@ -2167,11 +2072,9 @@
     :try_end_0
     .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
 
-    .line 983
     :goto_0
     return-void
 
-    .line 980
     :catch_0
     move-exception v0
 
@@ -2189,7 +2092,6 @@
     .end annotation
 
     .prologue
-    .line 823
     :try_start_0
     invoke-static {}, Landroid/app/ActivityManagerNative;->getDefault()Landroid/app/IActivityManager;
 
@@ -2201,15 +2103,12 @@
 
     move-result v1
 
-    .line 826
     :goto_0
     return v1
 
-    .line 824
     :catch_0
     move-exception v0
 
-    .line 826
     .local v0, e:Landroid/os/RemoteException;
     const/4 v1, 0x0
 
@@ -2227,7 +2126,6 @@
     .end annotation
 
     .prologue
-    .line 850
     :try_start_0
     invoke-static {}, Landroid/app/ActivityManagerNative;->getDefault()Landroid/app/IActivityManager;
 
@@ -2239,15 +2137,12 @@
 
     move-result v1
 
-    .line 853
     :goto_0
     return v1
 
-    .line 851
     :catch_0
     move-exception v0
 
-    .line 853
     .local v0, e:Landroid/os/RemoteException;
     const/4 v1, 0x0
 
@@ -2261,10 +2156,8 @@
     .end annotation
 
     .prologue
-    .line 1924
     invoke-virtual {p0, p1}, Landroid/app/ActivityManager;->killBackgroundProcesses(Ljava/lang/String;)V
 
-    .line 1925
     return-void
 .end method
 
@@ -2273,7 +2166,6 @@
     .parameter "mode"
 
     .prologue
-    .line 344
     :try_start_0
     invoke-static {}, Landroid/app/ActivityManagerNative;->getDefault()Landroid/app/IActivityManager;
 
@@ -2283,11 +2175,9 @@
     :try_end_0
     .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
 
-    .line 348
     :goto_0
     return-void
 
-    .line 345
     :catch_0
     move-exception v0
 
@@ -2300,7 +2190,6 @@
     .parameter "ask"
 
     .prologue
-    .line 382
     :try_start_0
     invoke-static {}, Landroid/app/ActivityManagerNative;->getDefault()Landroid/app/IActivityManager;
 
@@ -2310,11 +2199,9 @@
     :try_end_0
     .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
 
-    .line 386
     :goto_0
     return-void
 
-    .line 383
     :catch_0
     move-exception v0
 
@@ -2327,7 +2214,7 @@
     .parameter "mode"
 
     .prologue
-    .line 363
+    .line 1979
     :try_start_0
     invoke-static {}, Landroid/app/ActivityManagerNative;->getDefault()Landroid/app/IActivityManager;
 
@@ -2337,11 +2224,9 @@
     :try_end_0
     .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
 
-    .line 367
     :goto_0
     return-void
 
-    .line 364
     :catch_0
     move-exception v0
 
@@ -2353,7 +2238,7 @@
     .parameter "userid"
 
     .prologue
-    .line 2231
+    .line 334
     :try_start_0
     invoke-static {}, Landroid/app/ActivityManagerNative;->getDefault()Landroid/app/IActivityManager;
 
@@ -2365,15 +2250,15 @@
 
     move-result v1
 
-    .line 2233
+    .line 337
     :goto_0
     return v1
 
-    .line 2232
+    .line 335
     :catch_0
     move-exception v0
 
-    .line 2233
+    .line 337
     .local v0, e:Landroid/os/RemoteException;
     const/4 v1, 0x0
 

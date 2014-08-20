@@ -1,0 +1,19 @@
+*** ./smali/com/android/server/pm/GrantedPermissions.smali	2014-08-20 14:02:04.280469789 +0200
+--- /home/Gava97/patchrom/kumquat/temp/new_smali/services.jar.out/./smali/com/android/server/pm/GrantedPermissions.smali	2014-08-20 14:01:07.824469051 +0200
+***************
+*** 91,97 ****
+      .parameter "pkgFlags"
+  
+      .prologue
+!     const v0, 0x60040001
+  
+      and-int/2addr v0, p1
+  
+--- 91,97 ----
+      .parameter "pkgFlags"
+  
+      .prologue
+!     const v0, -0x19fbffff
+  
+      and-int/2addr v0, p1
+  

@@ -4419,6 +4419,8 @@
 
     invoke-virtual {v2, v6, v8}, Landroid/content/Intent;->putExtra(Ljava/lang/String;Z)Landroid/content/Intent;
 
+    invoke-static {p0, v2}, Lcom/android/server/location/Injector$GpsLocationProviderHook;->appendUidExtra(Lcom/android/server/location/GpsLocationProvider;Landroid/content/Intent;)V
+
     .line 1266
     iget-object v6, p0, Lcom/android/server/location/GpsLocationProvider;->mContext:Landroid/content/Context;
 
@@ -6210,6 +6212,15 @@
     throw v0
 .end method
 
+.method getClientSource()Landroid/os/WorkSource;
+    .locals 1
+
+    .prologue
+    iget-object v0, p0, Lcom/android/server/location/GpsLocationProvider;->mClientSource:Landroid/os/WorkSource;
+
+    return-object v0
+.end method
+
 .method public getGpsGeofenceProxy()Landroid/location/IGpsGeofenceHardware;
     .locals 1
 
@@ -6238,6 +6249,15 @@
     const-string v0, "gps"
 
     return-object v0
+.end method
+
+.method getNavigating()Z
+    .locals 1
+
+    .prologue
+    iget-boolean v0, p0, Lcom/android/server/location/GpsLocationProvider;->mNavigating:Z
+
+    return v0
 .end method
 
 .method public getNetInitiatedListener()Landroid/location/INetInitiatedListener;

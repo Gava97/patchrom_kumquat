@@ -1,0 +1,13 @@
+*** ./smali/android/preference/PreferenceGroup.smali	2014-08-20 14:01:35.224469409 +0200
+--- /home/Gava97/patchrom/kumquat/temp/new_smali/framework.jar.out/./smali/android/preference/PreferenceGroup.smali	2014-08-20 14:00:30.804468567 +0200
+***************
+*** 257,262 ****
+--- 257,264 ----
+      :cond_5
+      invoke-virtual {p0}, Landroid/preference/PreferenceGroup;->notifyHierarchyChanged()V
+  
++     invoke-virtual {p1, p0}, Landroid/preference/Preference;->setParent(Landroid/preference/PreferenceGroup;)V
++ 
+      move v1, v2
+  
+      goto :goto_0

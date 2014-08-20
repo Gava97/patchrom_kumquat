@@ -1,0 +1,20 @@
+*** ./smali/com/android/server/am/AppNotRespondingDialog.smali	2014-08-20 14:01:57.288469698 +0200
+--- /home/Gava97/patchrom/kumquat/temp/new_smali/services.jar.out/./smali/com/android/server/am/AppNotRespondingDialog.smali	2014-08-20 14:00:52.324468848 +0200
+***************
+*** 320,325 ****
+--- 320,334 ----
+  
+  
+  # virtual methods
++ .method getProc()Lcom/android/server/am/ProcessRecord;
++     .locals 1
++ 
++     .prologue
++     iget-object v0, p0, Lcom/android/server/am/AppNotRespondingDialog;->mProc:Lcom/android/server/am/ProcessRecord;
++ 
++     return-object v0
++ .end method
++ 
+  .method public onStop()V
+      .locals 0
+  
